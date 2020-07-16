@@ -13,6 +13,13 @@ internal class UsageStatsReader(private val context: Context):
         context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
     }
 
+    private val evOpen = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        @Suppress("DEPRECATION")
+        UsageEvents.Event.MOVE_TO_FOREGROUND
+    } else {
+        UsageEvents.Event.ACTIVITY_RESUMED
+    }
+
     override fun read(timeToLife: Int): String {
         val endTime = System.currentTimeMillis()
         val beginTime = endTime - (1000 * timeToLife)
@@ -21,8 +28,7 @@ internal class UsageStatsReader(private val context: Context):
             val ev = UsageEvents.Event()
             while (it.hasNextEvent()) {
                 it.getNextEvent(ev)
-                @Suppress("DEPRECATION")
-                if (ev.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+                if (ev.eventType == evOpen) {
                     info = ev.packageName
                 }
             }
