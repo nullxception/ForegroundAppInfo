@@ -3,14 +3,16 @@ package moe.chaldeaprjkt.foregroundappinfo
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.os.Build
-import androidx.annotation.RequiresApi
 import moe.chaldeaprjkt.foregroundappinfo.reader.ActivityReader
 import moe.chaldeaprjkt.foregroundappinfo.reader.UsageStatsReader
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 class ForegroundAppInfo(private val context: Context) {
     private val reader by lazy {
-        UsageStatsReader(context)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            UsageStatsReader(context)
+        } else {
+            ActivityReader(context)
+        }
     }
 
     fun read(): ApplicationInfo =
