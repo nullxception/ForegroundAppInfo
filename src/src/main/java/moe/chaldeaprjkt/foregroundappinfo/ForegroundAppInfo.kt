@@ -12,6 +12,11 @@ import java.util.concurrent.TimeUnit
 
 class ForegroundAppInfo(private val context: Context) {
     var timeout = 1000L
+        set(value) {
+            stopListening()
+            runCallback()
+            field = value
+        }
 
     private lateinit var callback: (ApplicationInfo) -> Unit
     private val reader by lazy {
