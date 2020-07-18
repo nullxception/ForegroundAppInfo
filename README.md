@@ -18,15 +18,10 @@ and then make sure users already enable Usage Access for your app.
 ```
 // YourStuff.kt
 ...
-with(context) {
-    val appInfo = packageManager.getApplicationInfo(packageName, 0)
-    val appOps = getSystemService(AppCompatActivity.APP_OPS_SERVICE) as AppOpsManager
-    val usageStatsMode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, appInfo.uid, appInfo.packageName)
-
-    if (usageStatsMode != AppOpsManager.MODE_ALLOWED) {
-        // open usage access setting
-        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-    }
+val info = ForegroundAppInfo(this)
+if (info.checkUsageStatsMode() != AppOpsManager.MODE_ALLOWED) {
+    // open usage access setting
+    startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
 }
 ...
 ```
