@@ -10,12 +10,12 @@ Before using it, make sure you already have required permission for getting task
 For android Lolipop and above, you have to declare UsageStats permission in `AndroidManifest.xml`,
 and then make sure users already enable Usage Access for your app.
 
-```
+```xml
 <!-- AndroidManifest.xml -->
 <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>
 ```
 
-```
+```kt
 // YourStuff.kt
 ...
 val info = ForegroundAppInfo(this)
@@ -29,13 +29,13 @@ if (info.checkUsageStatsMode() != AppOpsManager.MODE_ALLOWED) {
 # Usage
 
 ### Reading the info directly
-```
+```kt
 val current: ApplicationInfo = ForegroundAppInfo(this).read()
 
 Log.i(TAG, "Current top app is: ${current.packageName}, uid: ${current.uid}")
 ```
 ### Continuously listen the app info
-```
+```kt
 val info = ForegroundAppInfo(this)
 
 // start
@@ -57,7 +57,7 @@ info.stopListening()
 # Download
 
 Add JitPack repo to the project `build.gradle`
-```
+```gradle
 allprojects {
     repositories {
         ...
@@ -68,7 +68,7 @@ allprojects {
 ```
 
 Then add this to your app `build.gradle`
-```
+```gradle
 dependencies {
 	implementation 'com.github.nullxception:ForegroundAppInfo:1.0.1'
 }
