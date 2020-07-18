@@ -70,6 +70,6 @@ allprojects {
 Then add this to your app `build.gradle`
 ```
 dependencies {
-	implementation 'com.github.nullxception:ForegroundAppInfo:1.0'
+	implementation 'com.github.nullxception:ForegroundAppInfo:1.0.1'
 }
 ```
